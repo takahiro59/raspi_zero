@@ -1,7 +1,7 @@
 FROM balenalib/raspberry-pi-python
 
 RUN apt-get update && apt-get install -y \
-    build-essential cmake libffi-dev
+    build-essential cmake libffi-dev zlib-dev
 
 RUN --mount=type=tmpfs,target=/root/.cargo \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
