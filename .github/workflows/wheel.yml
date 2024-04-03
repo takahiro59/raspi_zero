@@ -1,0 +1,20 @@
+name: Build netmuxd
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: sudo apt update && sudo apt install qemu-user-static
+      - uses: ./wheel
+        with:
+          entrypoint: ''
+          cmd: sh -c 'mv -r /output/wheel ./'
+      - run: tar -cf - wheel | zstd --ultra -22 > wheel.tar.zst
+      - run: gh release create wheel wheel.tar.zst
+        env: 
+          GH_TOKEN: ${{ github.token }}
