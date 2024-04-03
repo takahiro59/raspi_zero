@@ -10,9 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          echo "deb [arch=armhf] http://archive.raspbian.org/raspbian bullseye main contrib non-free" | tee -a /etc/apt/sources.list
-          wget https://archive.raspbian.org/raspbian.public.key -O - | apt-key add -
-          dpkg --add-architecture armhf
+          echo "deb [arch=armhf] http://archive.raspbian.org/raspbian bullseye main contrib non-free" | sudo tee -a /etc/apt/sources.list
+          wget https://archive.raspbian.org/raspbian.public.key -O - | sudo apt-key add -
+          sudo dpkg --add-architecture armhf
       - run: sudo apt update
       - run: sudo apt install crossbuild-essential-armhf libtool-bin:armhf libavahi-glib-dev:armhf libavahi-client-dev:armhf libusb-1.0-0-dev:armhf libssl-dev:armhf libplist++-dev:armhf
       - run: |
@@ -24,6 +24,6 @@ jobs:
           rustup target add arm-unknown-linux-gnueabihf
           cd netmuxd
           cargo build --target=arm-unknown-linux-gnueabihf --release --bin netmuxd
-      - run: gh release create netmuxd netmuxd/target/arm-unknown-linux-gnueabihf/release/netmuxd
+      - run: gh release create netmuxd_cross netmuxd/target/arm-unknown-linux-gnueabihf/release/netmuxd
         env: 
           GH_TOKEN: ${{ github.token }}
