@@ -6,8 +6,9 @@ RUN mkdir /buildenv
 
 WORKDIR /buildenv
 
-RUN git clone https://github.com/vtky/corecrypto
+RUN curl -JO 'https://developer.apple.com/file/?file=security&agree=Yes' -H 'Referer: https://developer.apple.com/security/' && unzip corecrypto.zip
 WORKDIR /buildenv/corecrypto
+COPY altserver/CMakeLists.txt ./CMakeLists.txt
 RUN mkdir build; cd build; CC=clang CXX=clang++ cmake ..;
 WORKDIR /buildenv/corecrypto/build
 RUN sed -i -E 's|^(all: CMakeFiles\/corecrypto_perf)|#\1|' CMakeFiles/Makefile2; sed -i -E 's|^(all: CMakeFiles\/corecrypto_test)|#\1|' CMakeFiles/Makefile2
