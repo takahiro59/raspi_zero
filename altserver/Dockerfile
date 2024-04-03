@@ -20,7 +20,7 @@ WORKDIR /buildenv
 RUN git clone --recursive https://github.com/microsoft/cpprestsdk; 
 WORKDIR /buildenv/cpprestsdk
 RUN sed -i 's|-Wcast-align||' "./Release/CMakeLists.txt"
-RUN mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 ..; make -j6; make install
+RUN CFLAGS='-Wno-psabi' mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 ..; make -j6; make install
 
 WORKDIR /buildenv
 
