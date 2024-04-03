@@ -25,7 +25,7 @@ jobs:
           ARCH: arm
           CROSS_COMPILE: arm-linux-gnueabihf-
       - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
-      - run: tar -cf - ./build | zstd --ultra -22 -T0 > linux.tar.zst
+      - run: tar -cf - ./linux | zstd --ultra -22 -T0 > linux.tar.zst
       - run: gh release create linux linux.tar.zst
         env: 
           GH_TOKEN: ${{ github.token }}
