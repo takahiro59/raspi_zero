@@ -1,0 +1,19 @@
+name: Build altserver
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: sudo apt update && sudo apt install qemu-user-static
+      - uses: ./altserver
+        with:
+          entrypoint: ''
+          cmd: sh -c 'mv /output/altserver ./'
+      - run: gh release create altserver ${{ github.workspace }}/altserver
+        env: 
+          GH_TOKEN: ${{ github.token }}
