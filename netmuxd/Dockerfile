@@ -13,10 +13,10 @@ RUN apt-get update \
         libusb-1.0-0-dev \
         libssl-dev \
         udev \
-        libplist++-dev libtool autoconf automake \
+        libplist++-dev libtool \
         python3 python3-dev \
         curl usbmuxd \
-        wget lsb-release wget software-properties-common \
+        wget wget software-properties-common \
         clang
 
 RUN git clone --recursive https://github.com/jkcoxson/netmuxd.git
