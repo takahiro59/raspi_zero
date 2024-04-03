@@ -24,6 +24,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN git clone --recursive https://github.com/jkcoxson/netmuxd.git
 RUN git clone --recursive https://github.com/zeyugao/zeroconf-rs.git
 
-RUN --mount=type=tmpfs,target=/.cargo CARGO_HOME=/.cargo . "$HOME/.cargo/env" && cd netmuxd && cargo build --release --bin netmuxd
+RUN --mount=type=tmpfs,target=/root/.cargo cd netmuxd && cargo build --release --bin netmuxd
 
 RUN mkdir /output && mv netmuxd/target/release/netmuxd /output
