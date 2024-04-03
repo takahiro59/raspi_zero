@@ -6,7 +6,7 @@ RUN mkdir /buildenv
 
 WORKDIR /buildenv
 
-RUN curl -JO 'https://developer.apple.com/file/?file=security&agree=Yes' -H 'Referer: https://developer.apple.com/security/' && unzip corecrypto.zip
+RUN git clone https://github.com/vtky/corecrypto
 WORKDIR /buildenv/corecrypto
 RUN mkdir build; cd build; CC=clang CXX=clang++ cmake ..;
 WORKDIR /buildenv/corecrypto/build
