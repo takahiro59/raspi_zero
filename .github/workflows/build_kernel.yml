@@ -18,7 +18,7 @@ jobs:
           make bcmrpi_defconfig O=../build
           cd ../build
           ../linux/scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
-          make -j6 zImage modules dtbs
+          make -j6 zImage modules dtbs O=./
           make clean
         env: 
           KERNEL: kernel
