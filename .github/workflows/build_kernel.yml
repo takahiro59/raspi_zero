@@ -16,7 +16,7 @@ jobs:
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
           make bcmrpi_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
-          cat .config
+          cat .config | grep USB_IDEVICE_DEBUG_NCM
           make -j6 zImage modules dtbs
           make clean
         env: 
@@ -24,7 +24,7 @@ jobs:
           LOCALVERSION: -dev
           ARCH: arm
           CROSS_COMPILE: arm-linux-gnueabihf-
-      - run: cp kernel/install.sh build/ && chmod 755 build/install.sh
+      - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
       - run: tar -cf - ./build | zstd --ultra -22 -T0 > linux.tar.zst
       - run: gh release create linux linux.tar.zst
         env: 
