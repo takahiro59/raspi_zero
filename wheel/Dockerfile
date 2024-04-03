@@ -15,4 +15,4 @@ RUN --mount=type=tmpfs,target=/root/.cargo \
     && pip3 install SideJITServer \
     && pip3 freeze > requirements.txt \
     && mkdir -p /output/wheel \
-    && pip3 wheel -d /output/wheel -r requirements.txt
+    && pip3 wheel --wheel-dir=/output/wheel -r requirements.txt
