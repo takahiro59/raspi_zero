@@ -15,14 +15,8 @@ jobs:
           cd linux
           KERNEL=kernel
           make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcmrpi_defconfig
-      - run: |
-          cd linux
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-      - run: |
-          cd linux
-          echo 'USB_IDEVICE_DEBUG_NCM=m' | tee -a .config
-      - run: |
-          cd linux
+          ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j6 zImage modules dtbs
       - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
       - run: tar -cf - ./linux | zstd --ultra -22 -T0 > linux.tar.zst
