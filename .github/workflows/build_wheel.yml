@@ -13,7 +13,7 @@ jobs:
       - uses: ./wheel
         with:
           entrypoint: ''
-          cmd: sh -c 'mv -r /output/wheel ./'
+          args: sh -c 'mv -r /output/wheel ./'
       - run: tar -cf - wheel | zstd --ultra -22 > wheel.tar.zst
       - run: gh release create wheel wheel.tar.zst
         env: 
