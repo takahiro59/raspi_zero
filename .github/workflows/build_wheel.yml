@@ -1,4 +1,4 @@
-name: Build netmuxd
+name: Build wheel
 on:
   workflow_dispatch:
 
