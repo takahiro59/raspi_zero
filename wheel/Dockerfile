@@ -8,5 +8,5 @@ RUN python3 -m venv .venv \
     && pip3 install -U pip setuptools wheel \
     && pip3 install SideJITServer \
     && pip3 freeze > requirements.txt \
-    && mkdir -p /output/wheel
+    && mkdir -p /output/wheel \
     && pip3 wheel -d /output/wheel -r requirements.txt
