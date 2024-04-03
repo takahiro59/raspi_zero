@@ -1,4 +1,4 @@
-FROM techlife/raspios_lite_armhf
+FROM --platform=linux/arm32/v6 techlife/raspios_lite_armhf
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -23,10 +23,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 
-RUN . "$HOME/.cargo/env"
-
 RUN git clone --depth 1 https://github.com/jkcoxson/netmuxd.git
 
-WORKDIR netmuxd
-
-RUN cargo build --release --bin netmuxd
+RUN cd netmuxd && . "$HOME/.cargo/env" && cargo build --release --bin netmuxd
