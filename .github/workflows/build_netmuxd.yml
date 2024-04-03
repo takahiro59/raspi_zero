@@ -5,9 +5,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: 
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - run: sudo apt update && sudo apt install qemu-user-static
       - run: wget https://downloads.raspberrypi.org/raspios_lite_armhf/archive/2024-03-15-16:10/root.tar.xz
       - run: docker image import root.tar.xz techlife/raspios_lite_armhf:latest
       - uses: ./netmuxd
+      - run: gh release create netmuxd ${{ github.workspace }}/target/release/netmuxd
+        env: 
+          GH_TOKEN: ${{ github.token }}
