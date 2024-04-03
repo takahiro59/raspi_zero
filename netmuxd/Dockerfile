@@ -1,4 +1,4 @@
-FROM --platform=linux/arm32/v6 techlife/raspios_lite_armhf
+FROM balenalib/raspberry-pi-debian:latest
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
