@@ -19,12 +19,13 @@ RUN apt-get update \
         wget lsb-release wget software-properties-common \
         clang
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
 RUN git clone --recursive https://github.com/jkcoxson/netmuxd.git
 RUN git clone --recursive https://github.com/zeyugao/zeroconf-rs.git
 
-RUN cp $HOME/.cargo/env cargo_env
-RUN --mount=type=tmpfs,target=/root/.cargo . cargo_env && cd netmuxd && cargo build --release --bin netmuxd
+RUN --mount=type=tmpfs,target=/root/.cargo \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    && . "$HOME/.cargo/env" \
+    && cd netmuxd \
+    && cargo build --release --bin netmuxd
 
 RUN mkdir /output && mv netmuxd/target/release/netmuxd /output
