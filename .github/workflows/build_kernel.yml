@@ -13,13 +13,20 @@ jobs:
       - run: git clone --depth=1 https://github.com/raspberrypi/linux
       - run: |
           cd linux
-          KERNEL=kernel
-          make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcmrpi_defconfig
+          mkdir ../build
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
-          make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j6 zImage modules dtbs
-      - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
-      - run: tar -cf - ./linux | zstd --ultra -22 -T0 > linux.tar.zst
+          make bcmrpi_defconfig O=../build
+          cd ../build
+          ../linux/scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
+          make -j6 zImage modules dtbs
+          make clean
+        env: 
+          KERNEL: kernel
+          LOCALVERSION: -dev
+          ARCH: arm
+          CROSS_COMPILE: arm-linux-gnueabihf-
+      - run: cp kernel/install.sh build/ && chmod 755 build/install.sh
+      - run: tar -cf - ./build | zstd --ultra -22 -T0 > linux.tar.zst
       - run: gh release create linux linux.tar.zst
         env: 
           GH_TOKEN: ${{ github.token }}
