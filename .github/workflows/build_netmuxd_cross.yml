@@ -13,7 +13,7 @@ jobs:
           echo "deb [arch=armhf] http://archive.raspbian.org/raspbian bullseye main contrib non-free" | sudo tee -a /etc/apt/sources.list
           wget https://archive.raspbian.org/raspbian.public.key -O - | sudo apt-key add -
           sudo dpkg --add-architecture armhf
-      - run: sudo apt update || sh -c "exit $(($? == 100 ? 0 : $?))"
+      - run: sudo apt update || true
       - run: sudo apt install crossbuild-essential-armhf libtool-bin:armhf libavahi-glib-dev:armhf libavahi-client-dev:armhf libusb-1.0-0-dev:armhf libssl-dev:armhf libplist++-dev:armhf
       - run: |
           git clone --recursive https://github.com/jkcoxson/netmuxd.git
