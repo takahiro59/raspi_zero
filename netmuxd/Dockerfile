@@ -21,8 +21,6 @@ RUN apt-get update \
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
-
 RUN git clone --recursive https://github.com/jkcoxson/netmuxd.git
 RUN git clone --recursive https://github.com/zeyugao/zeroconf-rs.git
 
