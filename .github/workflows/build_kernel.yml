@@ -13,12 +13,11 @@ jobs:
       - run: git clone --depth=1 https://github.com/raspberrypi/linux
       - run: |
           cd linux
-          mkdir ../build
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          make bcmrpi_defconfig O=../build
-          cd ../build
-          ../linux/scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
-          make -j6 zImage modules dtbs O=./
+          make bcmrpi_defconfig
+          ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
+          cat .config
+          make -j6 zImage modules dtbs
           make clean
         env: 
           KERNEL: kernel
