@@ -2,41 +2,6 @@ cmake_minimum_required(VERSION 3.4.3)
 set(CMAKE_OSX_SYSROOT "macosx.internal") # NOTE: This must be set before the
                                          # call to project
 
-option(CC_LINUX_ASM "Enable assembler support on Linux platform" OFF)
-option(CC_SMALL_CODE "Enable small code" OFF)
-option(BUILD_FOR_ARMV7 "Cross-compile for ARMv7" OFF)
-option(BUILD_FOR_ARMV6 "Cross-compile for ARMv6" OFF)
-
-if(BUILD_FOR_ARMV6)
-  set(CMAKE_C_COMPILER "arm-none-eabi-gcc")
-  set(CMAKE_C_FLAGS "-mcpu=cortex-m0 -mfloat-abi=soft")
-  set(CMAKE_EXE_LINKER_FLAGS "--specs=rdimon.specs")
-
-  enable_language(ASM)
-  set(CMAKE_ASM_COMPILER "arm-none-eabi-gcc")
-  set(CMAKE_ASM_FLAGS "-x assembler-with-cpp ${CMAKE_C_FLAGS}")
-endif()
-
-if(BUILD_FOR_ARMV7)
-  set(CMAKE_SYSTEM_NAME Linux)
-  set(CMAKE_SYSTEM_PROCESSOR arm)
-
-  set(triple armv7-linux-gnueabihf)
-
-  set(CMAKE_C_COMPILER clang)
-  set(CMAKE_C_COMPILER_TARGET ${triple})
-  set(CMAKE_CXX_COMPILER clang++)
-  set(CMAKE_CXX_COMPILER_TARGET ${triple})
-  set(CMAKE_ASM_COMPILER clang)
-  set(CMAKE_ASM_COMPILER_TARGET ${triple})
-
-  set(CMAKE_C_FLAGS "-I/usr/arm-linux-gnueabihf/include")
-  set(LINKER_FLAGS "-fuse-ld=/usr/arm-linux-gnueabihf/bin/ld")
-  set(CMAKE_EXE_LINKER_FLAGS "${LINKER_FLAGS}")
-  set(CMAKE_SHARED_LINKER_FLAGS "${LINKER_FLAGS}")
-  set(CMAKE_LIBRARY_PATH "/usr/arm-linux-gnueabihf/lib/")
-endif()
-
 project(corecrypto C)
 
 include(CoreCryptoSources.cmake)
@@ -185,20 +150,9 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
       cckprng/src/cckprng_rekeygens.c
       cckprng/src/cckprng_reseed.c
       cckprng/src/cckprng_storeseed.c
-      cckprng/src/prng.c)
+      cckprng/src/prng.c
+      ccsha2/src/ccsha256_trng_di.c)
 
-  if(CC_LINUX_ASM)
-    enable_language(ASM)
-
-    # Add assembler specific clang flags
-    set(CC_ASM_OPTIONS -integrated-as # Always use clang internal assembler
-                       -x assembler-with-cpp # Run preprocessor despite .s name
-    )
-    add_compile_options("$<$<COMPILE_LANGUAGE:ASM>:${CC_ASM_OPTIONS}>")
-
-    # Enable Linux assembler in corecrypto
-    add_compile_options("-DCC_LINUX_ASM=1")
-  endif()
 endif()
 
 include(GNUInstallDirs)
@@ -259,9 +213,3 @@ install(FILES ${CORECRYPTO_PUBLIC_HDRS} ${CORECRYPTO_PRIVATE_HDRS}
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/corecrypto")
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/corecrypto.pc
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-
-# Add defines
-if(CC_SMALL_CODE)
-  target_compile_definitions(corecrypto_perf PRIVATE CC_SMALL_CODE=1)
-endif()
-
