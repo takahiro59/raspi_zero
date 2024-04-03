@@ -1,7 +1,7 @@
 FROM balenalib/raspberry-pi-python
 
 RUN apt-get update && apt-get install -y \
-    build-essential cmake 
+    build-essential cmake libffi-dev
 
 RUN python3 -m venv .venv \
     && . .venv/bin/activate \
