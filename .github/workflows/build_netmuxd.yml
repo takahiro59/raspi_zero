@@ -13,7 +13,7 @@ jobs:
       - uses: ./netmuxd
         with:
           entrypoint: ''
-          args: mv /output/netmuxd /github/workspace/
+          args: mv /output/netmuxd /github/workspace/netmuxd
       - run: zstd --ultra -22 -T0 netmux
       - run: gh release create netmuxd netmuxd.zst
         env: 
