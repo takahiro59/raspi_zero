@@ -13,8 +13,8 @@ jobs:
       - uses: ./altserver
         with:
           entrypoint: ''
-          args: mv /output/altserver /github/workspace/altserver
-      - run: ls -al altserver && zstd --ultra -22 -T0 altserver
-      - run: gh release create altserver altserver.zst
+          args: mv /output/altserver /github/workspace/altserver-bin
+      - run: ls -al altserver && zstd --ultra -22 -T0 altserver-bin
+      - run: gh release create altserver altserver-bin.zst
         env: 
           GH_TOKEN: ${{ github.token }}
