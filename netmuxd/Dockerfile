@@ -28,4 +28,4 @@ RUN --mount=type=tmpfs,target=/root/.cargo \
     && cd netmuxd \
     && cargo build --release --bin netmuxd
 
-RUN mkdir /output && mv netmuxd/target/release/netmuxd /output
+RUN mkdir /output && mv netmuxd/target/release/netmuxd /output/netmuxd
