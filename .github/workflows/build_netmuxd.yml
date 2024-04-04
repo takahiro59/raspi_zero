@@ -14,7 +14,7 @@ jobs:
         with:
           entrypoint: ''
           args: mv /output/netmuxd /github/workspace/netmuxd
-      - run: zstd --ultra -22 -T0 netmux
+      - run: zstd --ultra -22 -T0 netmuxd
       - run: gh release create netmuxd netmuxd.zst
         env: 
           GH_TOKEN: ${{ github.token }}
