@@ -13,8 +13,8 @@ jobs:
       - uses: ./wheel
         with:
           entrypoint: ''
-          args: bash -c "mkdir -p /github/workspace/wheel/ && mv /output/wheel /github/workspace/"
-      - run: tar -cf - wheel | zstd --ultra -22 -T0 > wheel.tar.zst
+          args: bash -c "mkdir -p /github/workspace/wheels/ && mv /output/wheel/* /github/workspace/wheels/"
+      - run: tar -cf - wheels | zstd --ultra -22 -T0 > wheel.tar.zst
       - run: gh release create wheel wheel.tar.zst
         env: 
           GH_TOKEN: ${{ github.token }}
