@@ -13,8 +13,8 @@ jobs:
       - uses: ./netmuxd
         with:
           entrypoint: ''
-          args: mv /output/netmuxd /github/workspace/netmuxd
-      - run: zstd --ultra -22 -T0 netmuxd
-      - run: gh release create netmuxd netmuxd.zst
+          args: mv /output/netmuxd /github/workspace/netmuxd-bin
+      - run: zstd --ultra -22 -T0 netmuxd-bin
+      - run: gh release create netmuxd netmuxd-bin.zst
         env: 
           GH_TOKEN: ${{ github.token }}
