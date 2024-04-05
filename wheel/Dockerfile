@@ -1,4 +1,4 @@
-FROM balenalib/raspberry-pi-python
+FROM balenalib/raspberry-pi-python:bookworm
 
 RUN apt-get update && apt-get install -y \
     build-essential cmake libffi-dev libssl-dev libjpeg-dev pkg-config \
