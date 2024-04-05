@@ -14,14 +14,14 @@ jobs:
           args: |
             sh -c "
                apk add alpine-sdk sudo \
-            && adduser builder
-            && addgroup builder abuild
-            && echo "builder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/builder
-            && chmod 440 /etc/sudoers.d/takesako
+            && adduser builder \
+            && addgroup builder abuild \
+            && echo "builder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/builder \
+            && chmod 440 /etc/sudoers.d/takesako \
             && chown builder:abuild alpine-kernel \
-            && mkdir -p /var/cache/distfiles
-            && chgrp abuild /var/cache/distfiles
-            && chmod g+w /var/cache/distfiles
+            && mkdir -p /var/cache/distfiles \
+            && chgrp abuild /var/cache/distfiles \
+            && chmod g+w /var/cache/distfiles \
             && cd alpine-kernel \
             && su builder -c "
                abuild checksum \
