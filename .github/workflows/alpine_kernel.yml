@@ -12,7 +12,7 @@ jobs:
         with:
           entrypoint: ''
           args: |
-            bash -c "
+            sh -c "
             apk add alpine-sdk \
             && cd alpine-kernel \
             && abuild checksum \
