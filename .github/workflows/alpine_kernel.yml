@@ -23,8 +23,6 @@ jobs:
             && chgrp abuild /var/cache/distfiles \
             && chmod g+w /var/cache/distfiles \
             && cd alpine-kernel \
-            && su builder -c "
-               abuild checksum \
-            && abuild -r
-            ""
+            && su builder -c "abuild checksum && abuild -r"
+            "
       - run: tree && ls -al
