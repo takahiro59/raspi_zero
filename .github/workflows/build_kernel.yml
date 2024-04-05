@@ -24,13 +24,8 @@ jobs:
           LOCALVERSION: -dev
           ARCH: arm
           CROSS_COMPILE: arm-linux-gnueabihf-
-      - run: |
-          mkdir -p boot/overlays
-          cp arch/arm/boot/zImage boot/kernel.img
-          cp arch/arm/boot/dts/broadcom/*.dtb boot/
-          cp arch/arm/boot/dts/overlays/*.dtb* boot/overlays/
-      - run: cp linux/install.sh boot/ && chmod 755 boot/install.sh
-      - run: tar -cf - ./boot | zstd --ultra -22 -T0 > boot.tar.zst
-      - run: gh release create linux boot.tar.zst
+      - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
+      - run: tar -cf - ./linux | zstd --ultra -22 -T0 > linux.tar.zst
+      - run: gh release create linux linux.tar.zst
         env: 
           GH_TOKEN: ${{ github.token }}
