@@ -16,7 +16,6 @@ jobs:
             apk add alpine-sdk \
             && cd alpine-kernel \
             && abuild checksum \
-            && abuild -r \
-            && tree || true \
-            && ls -al
+            && abuild -r
             "
+      - run: tree && ls -al
