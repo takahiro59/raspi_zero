@@ -18,7 +18,6 @@ jobs:
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           cat .config | grep USB_IDEVICE_DEBUG_NCM
           make -j6 zImage modules dtbs
-          make clean
         env: 
           KERNEL: kernel
           LOCALVERSION: -dev
