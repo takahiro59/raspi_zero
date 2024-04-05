@@ -1,0 +1,22 @@
+name: Build
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: sudo apt update && sudo apt install qemu-user-static
+      - uses: docker://arm32v6/alpine:edge
+        with:
+          entrypoint: ''
+          args: |
+            bash -c "
+            apk add alpine-sdk \
+            && cd alpine-kernel \
+            && abuild checksum \
+            && abuild -r \
+            && tree || true \
+            && ls -al
+            "
