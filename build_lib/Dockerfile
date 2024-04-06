@@ -12,12 +12,12 @@ RUN apt-get update \
         dub \
         openssl \
         build-essential \
-	pkg-config \
-	checkinstall \
-       	git \
-	autoconf \
-	automake \
-	libtool-bin
+        pkg-config \
+        checkinstall \
+        git \
+        autoconf \
+        automake \
+        libtool-bin
 
 WORKDIR /output
 
