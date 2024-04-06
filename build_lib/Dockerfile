@@ -6,7 +6,7 @@ RUN apt update && apt install -y \
 build-essential libavahi-compat-libdnssd-dev usbmuxd \
 ninja-build ldc libimobiledevice-dev libgtk-3-0 dub \
 openssl build-essential pkg-config checkinstall git \
-autoconf automake libtool-bin
+autoconf automake libtool-bin libusb-1.0-0-dev
 
 WORKDIR /output
 
