@@ -10,10 +10,7 @@ jobs:
       - uses: ./build_lib
         with:
           entrypoint: ''
-          args: bash -c "
-            mkdir bin_s \
-            && mv /output/* ./bin_s
-            "
+          args: bash -c "mkdir bin_s && mv /output/* ./"
       - run: cd bin_s && tar -cf - * | zstd --ultra -22 > ../bin_s.tar.zst
       - run: gh release create bin_s bin_s.tar.zst
         env: 
