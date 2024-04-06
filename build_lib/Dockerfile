@@ -1,4 +1,4 @@
-FROM --platform linux/arm32/v6 balenalib/raspberry-pi:bookworm-build
+FROM --platform=linux/arm32/v6 balenalib/raspberry-pi:bookworm-build
 
 RUN apt update
 RUN apt install -y \
