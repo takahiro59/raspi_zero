@@ -1,7 +1,7 @@
 FROM balenalib/raspberry-pi:bookworm-build
 
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    && apt-get install -y \
         build-essential \
         libavahi-compat-libdnssd-dev \
         usbmuxd \
