@@ -1,4 +1,4 @@
-name: Build
+name: Build lib
 on:
   workflow_dispatch:
 
