@@ -15,4 +15,6 @@ jobs:
             && mv /output/* ./bin_s
             "
       - run: cd bin_s && tar -cf - * | zstd --ultra -22 > ../bin_s.tar.zst
-      
+      - run: gh release create bin_s bin_s.tar.zst
+        env: 
+          GH_TOKEN: ${{ github.token }}
