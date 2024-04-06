@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./build-lib
+      - uses: ./build_lib
         with:
           entrypoint: ''
           args: bash -c "
