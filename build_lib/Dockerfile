@@ -1,23 +1,6 @@
-FROM --platform=linux/arm32/v6 balenalib/raspberry-pi:bookworm-build
+FROM balenalib/raspberry-pi:bookworm-build
 
-RUN apt update
-RUN apt install -y \
-        build-essential \
-        libavahi-compat-libdnssd-dev \
-        usbmuxd \
-        ninja-build \
-        ldc \
-        libimobiledevice-dev \
-        libgtk-3-0 \
-        dub \
-        openssl \
-        build-essential \
-        pkg-config \
-        checkinstall \
-        git \
-        autoconf \
-        automake \
-        libtool-bin
+RUN apt update && apt install -y build-essential libavahi-compat-libdnssd-dev usbmuxd ninja-build ldc libimobiledevice-dev libgtk-3-0 dub openssl build-essential pkg-config checkinstall git autoconf automake libtool-bin
 
 WORKDIR /output
 
