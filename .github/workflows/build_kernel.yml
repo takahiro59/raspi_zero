@@ -9,6 +9,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
+      - run: sudo sed -i s/jammy/noble/g /etc/apt/sources.list
       - run: sudo apt update && sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev clang llvm lld crossbuild-essential-arm64 
       - run: git clone --depth=1 https://github.com/raspberrypi/linux
       - run: |
@@ -25,7 +26,7 @@ jobs:
           LOCALVERSION: -dev
           ARCH: arm64
           CROSS_COMPILE: aarch64-linux-gnu-
-          KCFLAGS: -pipe -O2 -mcpu=cortex-a72 -mfloat-abi=hard -mfpu=neon-fp-armv8
+          KCFLAGS: -pipe -O2 -march=armv8-a+fp+simd
           LLVM: 1
 
       - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
