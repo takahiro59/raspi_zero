@@ -9,7 +9,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - run: sudo apt update && sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev crossbuild-essential-arm64 
+      - run: sudo apt update && sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev clang llvm lld crossbuild-essential-arm64 
       - run: git clone --depth=1 https://github.com/raspberrypi/linux
       - run: |
           cd linux
