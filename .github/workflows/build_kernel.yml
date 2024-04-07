@@ -9,22 +9,27 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - run: sudo apt update && sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev crossbuild-essential-armhf 
+      - run: sudo apt update && sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev crossbuild-essential-arm64 
       - run: git clone --depth=1 https://github.com/raspberrypi/linux
       - run: |
           cd linux
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          make bcmrpi_defconfig
+          make bcm2711_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
+          ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
+          ./scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD y
           cat .config | grep USB_IDEVICE_DEBUG_NCM
-          make -j6 zImage modules dtbs
+          make -j6 Image.gz modules dtbs
         env: 
-          KERNEL: kernel
+          KERNEL: kernel8
           LOCALVERSION: -dev
-          ARCH: arm
-          CROSS_COMPILE: arm-linux-gnueabihf-
+          ARCH: arm64
+          CROSS_COMPILE: aarch64-linux-gnu-
+          KCFLAGS: -pipe -O2 -mcpu=cortex-a72 -mfloat-abi=hard -mfpu=neon-fp-armv8 -mneon-for-64bits
+          LLVM: 1
+
       - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
       - run: tar -cf - ./linux | zstd --ultra -22 -T0 > linux.tar.zst
-      - run: gh release create linux linux.tar.zst
+      - run: gh release create linux-arm64 linux.tar.zst
         env: 
           GH_TOKEN: ${{ github.token }}
