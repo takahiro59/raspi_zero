@@ -42,6 +42,7 @@ jobs:
       - run: |
           cd ~/rtkernel/
           tar -cf - boot/ lib/ | zstd --ultra -22 -T0 > linux.tzst
+      - run: mv ~/rtkernel/linux.tzst .
       - run: gh release create linux-arm64 linux.tzst
         env: 
           GH_TOKEN: ${{ github.token }}
