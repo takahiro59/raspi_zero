@@ -19,8 +19,11 @@ jobs:
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
           ./scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD y
+          ./scripts/config --set-val CONFIG_ZSWAP_DEFAULT_ON y
+          ./scripts/config --set-val CONFIG_ZSTD_COMPRESS y
+          ./scripts/config --set-val CONFIG_ZSTD_DECOMPRESS y
           cat .config | grep USB_IDEVICE_DEBUG_NCM
-          make -j6 Image.gz modules dtbs
+          make -j6 Image.zst modules dtbs
         env: 
           KERNEL: kernel8
           LOCALVERSION: -dev
