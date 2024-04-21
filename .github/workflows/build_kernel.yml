@@ -16,7 +16,7 @@ jobs:
           cd linux
           make clean
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          curl -L https://github.com/zen-kernel/zen-kernel/releases/download/v6.8.7-lqx2/v6.8.7-lqx2.patch.xz | xzcat | patch -p1
+          curl -L https://cdn.kernel.org/pub/linux/kernel/projects/rt/6.8/patch-6.8.2-rt11.patch.gz | zcat | patch -p1
           make bcm2711_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
@@ -24,8 +24,14 @@ jobs:
           ./scripts/config --set-val CONFIG_ZSWAP_DEFAULT_ON y
           ./scripts/config --set-val CONFIG_ZSTD_COMPRESS y
           ./scripts/config --set-val CONFIG_ZSTD_DECOMPRESS y
+          ./scripts/config --set-val PREEMPT_RT y
           cat .config | grep USB_IDEVICE_DEBUG_NCM
           make -j6 Image.zst modules dtbs
+          mkdir -p ~/rtkernel/boot/firmware/overlays
+          make INSTALL_MOD_PATH=~/rtkernel modules_install
+          cp -r arch/arm64/boot/Image ~/rtkernel/boot/firmware/$KERNEL.img
+          cp arch/arm64/boot/dts/broadcom/*.dtb ~/rtkernel/boot/firmware/
+          cp arch/arm64/boot/dts/overlays/*.dtb* ~/rtkernel/boot/firmware/overlays/
         env: 
           KERNEL: kernel8
           LOCALVERSION: -dev
@@ -34,8 +40,9 @@ jobs:
           KCFLAGS: -pipe -O2 -march=armv8-a+fp+simd
           LLVM: 1
 
-      - run: cp kernel/install.sh linux/ && chmod 755 linux/install.sh
-      - run: tar -cf - ./linux | zstd --ultra -22 -T0 > linux.tar.zst
-      - run: gh release create linux-arm64 linux.tar.zst
+      - run: |
+          cd ~/rtkernel/
+          tar -cf - boot/ lib/ | zstd --ultra -22 -T0 > linux.tzst
+      - run: gh release create linux-arm64 linux.tzst
         env: 
           GH_TOKEN: ${{ github.token }}
