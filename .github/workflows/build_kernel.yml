@@ -15,7 +15,7 @@ jobs:
       - run: |
           cd linux
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          curl -L https://github.com/zen-kernel/zen-kernel/releases/download/v6.6.13-lqx1/v6.6.13-lqx1.patch.xz | xzcat | patch -p1
+          curl -L https://github.com/zen-kernel/zen-kernel/releases/download/v6.6.13-lqx1/v6.6.13-lqx1.patch.xz | xzcat | patch -p1 -R
           make bcm2711_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
