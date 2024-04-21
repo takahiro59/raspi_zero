@@ -9,14 +9,13 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - run: sudo sed -i s/jammy/noble/g /etc/apt/sources.list
       - run: sudo apt update && sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev clang llvm lld crossbuild-essential-arm64 
-      - run: git clone --depth=1 -b rpi-6.8.y https://github.com/raspberrypi/linux
+      - run: git clone --depth 1 -b rpi-6.8.y https://github.com/raspberrypi/linux
       - run: |
           cd linux
           make clean
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          curl -L https://cdn.kernel.org/pub/linux/kernel/projects/rt/6.8/patch-6.8.2-rt11.patch.gz | zcat | patch -p1
+          curl -L https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/6.8/older/patch-6.8-rt8.patch.gz | zcat | patch -p1
           make bcm2711_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
