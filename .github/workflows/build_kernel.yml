@@ -14,8 +14,9 @@ jobs:
       - run: git clone --depth=1 https://github.com/raspberrypi/linux
       - run: |
           cd linux
+          make clean
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          curl -L https://github.com/zen-kernel/zen-kernel/releases/download/v6.6.10-zen1/linux-v6.6.10-zen1.patch.zst | zstdcat | patch -p1 -R
+          curl -L https://github.com/zen-kernel/zen-kernel/releases/download/v6.6.10-zen1/linux-v6.6.10-zen1.patch.zst | zstdcat | patch -p1
           make bcm2711_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
