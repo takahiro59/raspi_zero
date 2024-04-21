@@ -15,7 +15,7 @@ jobs:
           cd linux
           make clean
           curl -L https://github.com/doronz88/pymobiledevice3/files/13638682/idevice_debug_ncm.patch | patch -p1
-          curl -L https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/6.8/older/patch-6.8.2-rt11.patch.gz | zcat | patch -p1
+          curl -L https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/6.8/older/patch-6.8.2-rt9.patch.gz | zcat | patch -p1
           make bcm2711_defconfig
           ./scripts/config --set-val USB_IDEVICE_DEBUG_NCM m
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
