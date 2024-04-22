@@ -21,8 +21,6 @@ jobs:
           ./scripts/config --set-val CONFIG_LTO_CLANG_THIN y
           ./scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD y
           ./scripts/config --set-val CONFIG_ZSWAP_DEFAULT_ON y
-          ./scripts/config --set-val CONFIG_ZSTD_COMPRESS y
-          ./scripts/config --set-val CONFIG_ZSTD_DECOMPRESS y
           ./scripts/config --set-val CONFIG_PREEMPT_RT y
           cat .config | grep USB_IDEVICE_DEBUG_NCM
           make -j6 Image.zst modules dtbs
